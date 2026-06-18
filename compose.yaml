@@ -1,0 +1,24 @@
+services:
+  db:
+    image: postgres:17
+    container_name: cineanalyze-db
+    restart: always
+    environment:
+      POSTGRES_USER: tde-raev
+      POSTGRES_PASSWORD: Password
+      POSTGRES_DB: movie_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      # This mount auto-runs your schema on the first startup
+      - ./data/schema.sql:/docker-entrypoint-initdb.d/init.sql
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
+
+volumes:
+  pgdata:
